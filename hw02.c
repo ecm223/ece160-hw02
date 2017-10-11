@@ -7,13 +7,29 @@ Prints the sizes and possible ranges of four integer data types.
 void print_int_ranges() {
   // These are made up numbers that will not be correct on most systems!
   // TODO correctly compute these values! 
-  int short_bytes = 2, int_bytes = 4, uint_bytes = 4, long_bytes = 4;
+  int short_bytes = sizeof(short), int_bytes = sizeof(int), uint_bytes = sizeof(uint), long_bytes = sizeof(long);
 
-  long  short_min = -32768,       short_max = 32767;
-  long  int_min   = -2147483648L, int_max   = 2147483647L;
-  long  uint_min  = 0,            uint_max  = 1 << (int_bytes * 8 - 1);
-  long  long_min  = -2147483648L, long_max  = 2147483647L;
+ // long  short_min = -32768,       short_max = 32767;
+ // long  int_min   = -2147483648L, int_max   = 2147483647L;
+ // long  uint_min  = 0,            uint_max  = 1 << (int_bytes * 8 - 1);
+ // long  long_min  = -2147483648L, long_max  = 2147483647L;
+    short short_min= 1;
+    short short_max;
+    int int_min = 1;
+    int int_max;
+    unsigned int uint_min = 1;
+    unsigned uint_max;
+    long long_min = 1;
+    long long_max;
 
+    short_min = short_min << (short_bytes * 8 - 1);
+    short_max = ~short_min;
+    int_min = int_min << (int_bytes * 8 - 1);
+    int_max = ~int_min;
+    uint_min = uint_min << (uint_bytes * 8 - 1);
+    uint_max = ~uint_min;
+    long_min = long_min << (long_bytes *8 - 1);
+    long_max = ~long_min;
   // Keep these exact printf commands :)   
   printf("short is %d bytes or %d bits and ranges from %ld to %ld\n",
          short_bytes, short_bytes * 8, short_min, short_max);
@@ -31,16 +47,21 @@ Returns 1 if bit i in value v equals 1
 Returns 0 if bit i in value v equals 0
 */
 int is_bit_set(unsigned char v, unsigned char i) {
+  int mask = 1 << i;
   if (i >= sizeof(unsigned char) * 8) {
     fprintf(stderr, "Index out of range!\n");
     return 0;
   }
-
+  else if((v & mask) == 0){
+    return 0;
+  }
+    else{
+    return 1;
+  }
   /*
   TODO your implementation goes here!
   */
 
-  return 0;
 }
 
 /*
